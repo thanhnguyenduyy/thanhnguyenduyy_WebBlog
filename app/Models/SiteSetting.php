@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-class TimelineItem extends Model
+
+class SiteSetting extends Model
 {
 
     protected $fillable = [
-        'year',
-        'title',
-        'description',
+        'key',
+        'value',
         'type',
+        'group',
     ];
 }

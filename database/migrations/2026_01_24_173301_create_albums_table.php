@@ -12,10 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('albums', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('title');
+            $table->string('slug')->unique();
             $table->string('cover_url')->nullable();
             $table->text('description')->nullable();
+            $table->boolean('is_public')->default(true);
             $table->timestamps();
         });
     }

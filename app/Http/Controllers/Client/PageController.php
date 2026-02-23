@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\GalleryCategory;
 use App\Models\BlogPost;
 use App\Models\Project;
 use App\Models\Photo;
 use App\Models\ResourceItem;
 use App\Models\TimelineItem;
 use App\Models\Message;
+use App\Mail\ContactMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PageController extends Controller
 {
@@ -44,8 +47,9 @@ class PageController extends Controller
      */
     public function gallery()
     {
-        $photos = Photo::all();
-        return view('client.pages.gallery', compact('photos'));
+        $photos = Photo::with('galleryCategory')->get();
+        $categories = GalleryCategory::has('photos')->orderBy('name')->get();
+        return view('client.pages.gallery', compact('photos', 'categories'));
     }
 
     /**
@@ -94,6 +98,14 @@ class PageController extends Controller
         ]);
 
         Message::create($validated);
+
+        try {
+            Mail::to(config('mail.from.address'))->send(
+                new ContactMail($validated['name'], $validated['email'], $validated['message'])
+            );
+        } catch (\Exception $e) {
+            \Log::error('Failed to send contact email: ' . $e->getMessage());
+        }
 
         return response()->json(['message' => 'Tin nhắn đã được gửi thành công! 🎉']);
     }

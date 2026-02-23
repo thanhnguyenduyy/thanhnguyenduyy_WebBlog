@@ -1,7 +1,7 @@
 @extends('client.layouts.app')
 
-@section('title', 'About | thanhnguyenduyy')
-@section('description', 'Câu chuyện của Nguyễn Duy Thanh - Developer và Photographer')
+@section('title', 'About | ' . $settings['site_name'])
+@section('description', $settings['site_description'])
 
 @section('content')
 <!-- About Page -->
@@ -12,8 +12,8 @@
             <div class="about-profile">
                 <div class="about-profile-wrapper">
                     <div class="about-profile-glow"></div>
-                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=300"
-                        class="about-profile-image" alt="Nguyen Minh Quân Profile">
+                    <img src="{{ $settings['site_avatar'] }}"
+                        class="about-profile-image" alt="{{ $settings['display_name'] }} Profile">
                 </div>
             </div>
             <div class="about-intro">
@@ -21,8 +21,7 @@
                 <div class="about-quote-wrapper">
                     <div class="about-line"></div>
                     <p class="about-quote font-serif italic">
-                        "I build digital foundations and capture fleeting moments. One requires precision, the
-                        other requires patience."
+                        {{ $settings['about_quote'] }}
                     </p>
                 </div>
             </div>
@@ -35,10 +34,7 @@
                     <span class="label-line"></span> 01. THE TECHNOLOGIST
                 </h3>
                 <p class="about-section-text">
-                    My journey in IT started with a fascination for how things work under the hood. From my
-                    first "Hello World" to architecting high-traffic web platforms, I've always been driven by
-                    the elegance of well-structured systems. I specialize in Fullstack development, Cloud
-                    Infrastructure, and UI/UX design.
+                    {{ $settings['technologist_bio'] }}
                 </p>
             </div>
 
@@ -62,7 +58,7 @@
         <!-- 02. THE OBSERVER -->
         <div class="about-section about-section-observer">
             <div class="about-observer-image">
-                <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&q=80&w=1000"
+                <img src="/assets/images/web/workspace.jpg"
                     alt="Photography Workspace">
             </div>
             <div class="about-section-content">
@@ -70,9 +66,7 @@
                     <span class="label-line"></span> 02. THE OBSERVER
                 </h3>
                 <p class="about-section-text">
-                    Photography is my way of slowing down. In a world of fast-paced releases, the lens forces me
-                    to wait for the light. My work focuses on Street Minimalism, seeking order and poetic
-                    geometry in urban chaos.
+                    {{ $settings['observer_bio'] }}
                 </p>
             </div>
         </div>

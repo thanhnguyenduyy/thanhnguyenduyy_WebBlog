@@ -12,14 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('blog_posts', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('title');
+            $table->string('slug')->unique();
             $table->text('excerpt')->nullable();
             $table->longText('content')->nullable();
             $table->enum('category', ['IT', 'PHOTOGRAPHY', 'THOUGHTS'])->default('IT');
-            $table->string('date');
+            $table->timestamp('published_at')->nullable();
             $table->string('image_url')->nullable();
             $table->enum('status', ['Published', 'Draft'])->default('Draft');
+            $table->integer('views_count')->default(0);
+            $table->boolean('is_featured')->default(false);
+            $table->integer('reading_time')->nullable();
             $table->timestamps();
         });
     }

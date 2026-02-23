@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('photos', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('title');
-            $table->enum('category', ['STREET', 'PORTRAIT', 'TRAVEL', 'MINIMAL']);
-            $table->string('url');
-            $table->string('exif')->nullable();
-            $table->uuid('album_id')->nullable();
+        Schema::create('gallery_categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->unique();
+            $table->string('slug')->unique();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('photos');
+        Schema::dropIfExists('gallery_categories');
     }
 };

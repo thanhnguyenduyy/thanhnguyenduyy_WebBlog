@@ -20,9 +20,9 @@
                     colors: {
                         brand: {
                             blue: '#00A3FF',
-                            dark: '#09090B',
-                            panel: '#151518',
-                            border: '#27272A'
+                            dark: '#18181B',   /* Zinc-900 */
+                            panel: '#27272A',  /* Zinc-800 */
+                            border: '#3F3F46'  /* Zinc-700 */
                         }
                     },
                     fontFamily: {
@@ -94,6 +94,9 @@
             </div>
         </main>
     </div>
+
+    <!-- Global Notifications -->
+    @include('admin.components.toast')
 
     <!-- Scripts -->
     <script>

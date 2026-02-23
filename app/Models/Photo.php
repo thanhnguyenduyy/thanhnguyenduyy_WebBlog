@@ -3,22 +3,23 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-
 class Photo extends Model
 {
-    use HasUuids;
 
     protected $fillable = [
         'title',
-        'category',
+        'gallery_category_id',
         'url',
         'exif',
-        'album_id',
+        'is_featured',
     ];
 
-    public function album()
+    protected $casts = [
+        'is_featured' => 'boolean',
+    ];
+
+    public function galleryCategory()
     {
-        return $this->belongsTo(Album::class);
+        return $this->belongsTo(GalleryCategory::class);
     }
 }

@@ -68,21 +68,27 @@ const PROJECTS = window.PROJECTS || [
         name: "Aperture Engine",
         tech: ["React", "Go", "WebAssembly"],
         desc: "A powerful browser-based RAW image processor using WebAssembly for near-native performance.",
-        image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1000"
+        image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1000",
+        link: "#",
+        github: "#"
     },
     {
         id: 2,
         name: "DevFlow CMS",
         tech: ["Next.js", "PostgreSQL", "Tailwind"],
         desc: "A specialized content management system optimized for technical documentation and portfolio showcase.",
-        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1000"
+        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1000",
+        link: "#",
+        github: "#"
     },
     {
         id: 3,
         name: "Focus Tracker",
         tech: ["TypeScript", "Node.js", "Redis"],
         desc: "A productivity tool designed for creative professionals to track deep work sessions and creative flow.",
-        image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=1000"
+        image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=1000",
+        link: "#",
+        github: "#"
     }
 ];
 
@@ -223,19 +229,20 @@ function renderBlogPosts() {
 
 function renderProjects() {
     projectsGrid.innerHTML = PROJECTS.map(project => `
-        <div class="project-card">
-            <div class="project-card-image">
+        <div class="project-card ${project.featured ? 'featured' : ''}">
+            <a href="${project.link || '#'}" target="_blank" class="project-card-image">
                 <img src="${project.image}" alt="${project.name}">
                 <div class="project-card-image-overlay"></div>
-            </div>
+                ${project.featured ? `<div class="project-badge">${icons.star} Featured</div>` : ''}
+            </a>
             <div class="project-card-content">
                 <div class="project-card-header">
                     <h3 class="project-card-title">${project.name}</h3>
-                    <span class="project-card-link">${icons.externalLink}</span>
+                    <a href="${project.link || '#'}" target="_blank" class="project-card-link">${icons.externalLink}</a>
                 </div>
                 <p class="project-card-desc">${project.desc}</p>
                 <div class="project-card-tech">
-                    ${project.tech.map(t => `<span class="project-tech-tag">${t}</span>`).join('')}
+                    ${(project.tech || []).map(t => `<span class="project-tech-tag">${t}</span>`).join('')}
                 </div>
             </div>
         </div>
@@ -548,9 +555,8 @@ contactForm.addEventListener('submit', async (e) => {
     submitBtn.classList.add('loading');
     submitBtn.disabled = true;
 
-    // Simulate API call or real call to Laravel
     try {
-        const response = await fetch('{{ route('contact.send') }}', {
+        const response = await fetch(contactForm.action, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

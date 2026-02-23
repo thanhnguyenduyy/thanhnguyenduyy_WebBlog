@@ -28,7 +28,10 @@
                 'name' => $project->title,
                 'tech' => $project->tech_stack,
                 'desc' => $project->description,
-                'image' => $project->image_url
+                'image' => $project->image_url,
+                'link' => $project->link,
+                'github' => $project->github_link,
+                'featured' => $project->is_featured
             ];
         });
     @endphp

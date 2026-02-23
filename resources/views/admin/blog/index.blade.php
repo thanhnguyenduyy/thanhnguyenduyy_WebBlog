@@ -29,13 +29,19 @@
         <div class="grid gap-4">
             @foreach($posts as $post)
             <div class="group bg-white dark:bg-brand-panel border border-zinc-200 dark:border-brand-border p-4 rounded-xl flex items-center space-x-4 hover:border-zinc-400 dark:hover:border-zinc-700 transition-all shadow-sm dark:shadow-none">
-                <img src="{{ $post->image_url }}" alt="{{ $post->title }}" class="w-16 h-16 object-cover rounded-lg filter grayscale group-hover:grayscale-0 transition-all duration-500" />
+                {{-- Original image colors --}}
+                <img src="{{ $post->image_url }}" alt="{{ $post->title }}" class="w-16 h-16 object-cover rounded-lg group-hover:grayscale-0 transition-all duration-500" />
                 <div class="flex-1 min-w-0">
                     <div class="flex items-center space-x-2 mb-1">
                         <span class="text-[10px] font-bold px-2 py-0.5 rounded border {{ $post->category === 'IT' ? 'border-blue-200 dark:border-blue-900 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/10' : 'border-purple-200 dark:border-purple-900 text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/10' }}">
                             {{ $post->category }}
                         </span>
-                        <span class="text-[10px] text-zinc-500 dark:text-zinc-600 uppercase tracking-widest">{{ $post->date }}</span>
+                        @if($post->is_featured)
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded border border-amber-200 dark:border-amber-900 text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/10">
+                            FEATURED
+                        </span>
+                        @endif
+                        <span class="text-[10px] text-zinc-500 dark:text-zinc-600 uppercase tracking-widest">{{ $post->published_at ? $post->published_at->format('M d, Y') : 'DRAFT' }}</span>
                     </div>
                     <h3 class="text-zinc-900 dark:text-white font-serif text-lg truncate">{{ $post->title }}</h3>
                     <p class="text-zinc-500 text-sm truncate">{{ $post->excerpt }}</p>

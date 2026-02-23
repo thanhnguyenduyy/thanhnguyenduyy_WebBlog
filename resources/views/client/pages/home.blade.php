@@ -8,13 +8,12 @@
     <div class="home-container">
         <div class="profile-wrapper">
             <div class="profile-glow"></div>
-            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=500"
+            <img src="{{ $settings['site_avatar'] }}"
                 class="profile-image" alt="Profile">
         </div>
-        <h1 class="home-title font-serif">Nguyễn Duy Thanh</h1>
+        <h1 class="home-title font-serif">{{ $settings['display_name'] }}</h1>
         <p class="home-subtitle">
-            Xây dựng thế giới qua <span class="text-cyan">code</span>. Lưu giữ khoảnh khắc qua <span
-                class="text-white font-serif italic">ống kính</span>.
+            {{ $settings['primary_slogan'] }}
         </p>
         <div class="home-buttons">
             <a href="{{ route('client.projects') }}" class="btn btn-primary">

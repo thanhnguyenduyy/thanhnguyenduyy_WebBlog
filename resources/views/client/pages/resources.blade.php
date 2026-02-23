@@ -8,7 +8,7 @@
 <section class="page page-resources active" id="page-resources">
     <div class="container">
         <div class="section-header">
-            <h2 class="section-title font-serif">Tài Nguyên</h2>
+            <h2 class="section-title font-serif">Resources</h2>
             <div class="section-line"></div>
             <p class="section-subtitle font-serif italic">"Chia sẻ miễn phí những công cụ giúp bạn học tập và
                 sáng tạo nhanh hơn."</p>
@@ -31,7 +31,8 @@
             return [
                 'title' => $res->title,
                 'items' => $res->description,
-                'icon' => $iconMap[$res->type] ?? 'layout'
+                'icon' => $iconMap[$res->type] ?? 'layout',
+                'url' => $res->url,
             ];
         });
     @endphp

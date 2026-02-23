@@ -847,7 +847,7 @@ textarea {
 .about-observer-image:hover img {
     opacity: 1;
     transform: scale(1.05);
-    filter: grayscale(0%);
+    /* filter: grayscale(0%); */
 }
 
 .about-section-observer .about-section-content {
@@ -1066,13 +1066,13 @@ textarea {
     height: 100%;
     object-fit: cover;
     opacity: 0.8;
-    filter: grayscale(40%);
-    transition: all var(--transition-slower);
+    /* filter: grayscale(40%); -- Original image colors */
+    transition: var(--transition-normal);
 }
 
 .blog-card:hover .blog-card-image img {
     opacity: 1;
-    filter: grayscale(0%);
+    /* filter: grayscale(0%); */
     transform: scale(1.05);
 }
 
@@ -1122,7 +1122,8 @@ textarea {
     line-height: 1.75;
     font-weight: 300;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -1205,12 +1206,12 @@ textarea {
     width: 100%;
     height: auto;
     object-fit: cover;
-    filter: grayscale(100%);
-    transition: all var(--transition-slower);
+    /* filter: grayscale(100%); -- Original image colors (Removed grayscale) */
+    transition: var(--transition-normal);
 }
 
 .gallery-item:hover img {
-    filter: grayscale(0%);
+    /* filter: grayscale(0%); */
     transform: scale(1.05);
 }
 
@@ -1311,6 +1312,7 @@ textarea {
 }
 
 .project-card-image {
+    display: block;
     position: relative;
     aspect-ratio: 16 / 9;
     overflow: hidden;
@@ -1332,6 +1334,30 @@ textarea {
     inset: 0;
     background-color: rgba(0, 0, 0, 0.4);
     transition: background-color var(--transition-normal);
+}
+
+.project-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background-color: #fbbf24;
+    /* Amber-400 */
+    color: #000;
+    padding: 0.35rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    z-index: 10;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.project-card.featured {
+    border-color: rgba(34, 211, 238, 0.3);
 }
 
 .project-card:hover .project-card-image-overlay {
@@ -1382,9 +1408,6 @@ textarea {
 }
 
 .project-tech-tag {
-    padding: 0.25rem 0.75rem;
-    background-color: rgba(255, 255, 255, 0.05);
-    border-radius: 9999px;
     font-size: 0.625rem;
     text-transform: uppercase;
     font-weight: 700;
@@ -1428,6 +1451,8 @@ textarea {
     justify-content: space-between;
     cursor: pointer;
     transition: border-color var(--transition-normal);
+    text-decoration: none;
+    color: inherit;
 }
 
 .resource-card:hover {
@@ -1714,7 +1739,7 @@ textarea {
 
 .form-input::placeholder,
 .form-textarea::placeholder {
-    color: rgb(31, 41, 55);
+    color: rgb(107, 114, 128);
 }
 
 .form-input:focus,

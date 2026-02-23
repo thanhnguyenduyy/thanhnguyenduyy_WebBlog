@@ -12,10 +12,9 @@
             <h2 class="gallery-title font-serif">Photography</h2>
             <div class="gallery-filters">
                 <button class="gallery-filter active" data-filter="ALL">ALL</button>
-                <button class="gallery-filter" data-filter="STREET">STREET</button>
-                <button class="gallery-filter" data-filter="PORTRAIT">PORTRAIT</button>
-                <button class="gallery-filter" data-filter="TRAVEL">TRAVEL</button>
-                <button class="gallery-filter" data-filter="MINIMAL">MINIMAL</button>
+                @foreach($categories as $category)
+                    <button class="gallery-filter" data-filter="{{ $category->name }}">{{ $category->name }}</button>
+                @endforeach
             </div>
         </div>
 
@@ -33,7 +32,7 @@
                 'id' => $photo->id,
                 'url' => $photo->url,
                 'title' => $photo->title,
-                'category' => $photo->category,
+                'category' => $photo->galleryCategory ? $photo->galleryCategory->name : 'Uncategorized',
                 'exif' => $photo->exif
             ];
         });

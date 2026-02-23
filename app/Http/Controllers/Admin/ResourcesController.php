@@ -5,19 +5,52 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\ResourceItem;
+
 class ResourcesController extends Controller
 {
     public function index()
     {
-        // Mock data for now to match the UI
-        $resources = [
-            ['id' => '1', 'title' => 'Minimalist Lightroom Presets', 'description' => 'A pack of 5 presets for urban photography.', 'type' => 'PRESET', 'downloads' => 1240, 'fileSize' => '2.4 MB'],
-            ['id' => '2', 'title' => 'React Admin Boilerplate', 'description' => 'Clean dashboard starter with Tailwind.', 'type' => 'CODE', 'downloads' => 856, 'fileSize' => '1.1 MB'],
-            ['id' => '3', 'title' => 'Design System Checklist', 'description' => 'PDF guide for product designers.', 'type' => 'PDF', 'downloads' => 3421, 'fileSize' => '500 KB'],
-        ];
+        $resources = ResourceItem::orderBy('created_at', 'desc')->get();
 
         return view('admin.resources.index', compact('resources'))
             ->with('title', 'Resources')
             ->with('currentViewId', 'resources');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'type' => 'required|in:PDF,PRESET,CODE,OTHER',
+            'url' => 'required|url',
+            'file_size' => 'nullable|string|max:50',
+        ]);
+
+        ResourceItem::create($validated);
+
+        return redirect()->route('admin.resources.index')->with('success', 'Resource created successfully');
+    }
+
+    public function update(Request $request, ResourceItem $resource)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'type' => 'required|in:PDF,PRESET,CODE,OTHER',
+            'url' => 'required|url',
+            'file_size' => 'nullable|string|max:50',
+        ]);
+
+        $resource->update($validated);
+
+        return redirect()->route('admin.resources.index')->with('success', 'Resource updated successfully');
+    }
+
+    public function destroy(ResourceItem $resource)
+    {
+        $resource->delete();
+        return redirect()->route('admin.resources.index')->with('success', 'Resource deleted successfully');
     }
 }

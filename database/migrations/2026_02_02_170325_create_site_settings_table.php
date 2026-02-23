@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('resource_items', function (Blueprint $table) {
+        Schema::create('site_settings', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description')->nullable();
-            $table->enum('type', ['PDF', 'PRESET', 'CODE', 'OTHER']);
-            $table->integer('downloads')->default(0);
-            $table->string('file_size')->nullable();
-            $table->string('url');
+            $table->string('key')->unique();
+            $table->text('value')->nullable();
+            $table->string('type')->default('text');
+            $table->string('group')->default('general');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('resource_items');
+        Schema::dropIfExists('site_settings');
     }
 };

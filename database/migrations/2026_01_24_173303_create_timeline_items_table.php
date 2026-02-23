@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('timeline_items', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('year');
             $table->string('title');
             $table->text('description')->nullable();

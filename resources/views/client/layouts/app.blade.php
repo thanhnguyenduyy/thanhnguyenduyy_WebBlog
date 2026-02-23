@@ -11,6 +11,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{{ $settings['site_favicon'] ?? asset('favicon.ico') }}">
     <link rel="stylesheet" href="{{ asset('assets/client/css/style.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @stack('styles')

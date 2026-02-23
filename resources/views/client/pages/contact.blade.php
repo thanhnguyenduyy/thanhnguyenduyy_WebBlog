@@ -19,7 +19,7 @@
                     Have an idea or a project in mind? Reach out and let's build something exceptional together.
                 </p>
                 <div class="contact-links">
-                    <a href="mailto:thanhnguyenduyy@gmail.com" class="contact-email-link">
+                    <a href="mailto:{{ $settings['contact_email'] }}" class="contact-email-link">
                         <div class="contact-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -32,11 +32,11 @@
                         </div>
                         <div>
                             <span class="contact-label">EMAIL</span>
-                            <span class="contact-value">thanhnguyenduyy@gmail.com</span>
+                            <span class="contact-value">{{ $settings['contact_email'] }}</span>
                         </div>
                     </a>
                     <div class="social-links">
-                        <a href="#" class="social-link social-github">
+                        <a href="{{ $settings['social_github'] }}" class="social-link social-github">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
@@ -46,7 +46,7 @@
                             </svg>
                             <span>GITHUB</span>
                         </a>
-                        <a href="#" class="social-link social-instagram">
+                        <a href="{{ $settings['social_instagram'] }}" class="social-link social-instagram">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
@@ -56,7 +56,7 @@
                             </svg>
                             <span>INSTA</span>
                         </a>
-                        <a href="#" class="social-link social-facebook">
+                        <a href="{{ $settings['social_facebook'] }}" class="social-link social-facebook">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
@@ -74,11 +74,11 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">Full Name</label>
-                        <input type="text" name="name" class="form-input" placeholder="John Doe">
+                        <input type="text" name="name" class="form-input" placeholder="Your name">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Email Address</label>
-                        <input type="email" name="email" class="form-input" placeholder="john@example.com">
+                        <input type="email" name="email" class="form-input" placeholder="Your email address">
                     </div>
                 </div>
                 <div class="form-group">

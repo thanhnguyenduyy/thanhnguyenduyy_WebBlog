@@ -2,10 +2,10 @@
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-copyright">
-            © {{ date('Y') }} NGUYEN DUY THANH · BUILT WITH PRECISION
+            © {{ date('Y') }} {{ mb_strtoupper($settings['display_name']) }} · BUILT WITH PRECISION
         </div>
         <p class="footer-quote font-serif italic">
-            "Logic will get you from A to B. Imagination will take you everywhere."
+            {{ $settings['footer_quote'] }}
         </p>
     </div>
 </footer>

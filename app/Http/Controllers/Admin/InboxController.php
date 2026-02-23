@@ -24,6 +24,12 @@ class InboxController extends Controller
             ->with('currentViewId', 'contact');
     }
 
+    public function toggleRead(Message $message)
+    {
+        $message->update(['is_read' => !$message->is_read]);
+        return back()->with('success', 'Message status updated');
+    }
+
     public function destroy(Message $inbox)
     {
         $inbox->delete();
