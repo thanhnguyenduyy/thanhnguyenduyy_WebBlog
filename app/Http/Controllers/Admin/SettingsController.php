@@ -33,6 +33,7 @@ class SettingsController extends Controller
             'social_instagram' => 'nullable|url',
             'social_facebook' => 'nullable|url',
             'footer_quote' => 'required|string',
+            'tech_stack' => 'required|string',
             // File fields validation
             'site_logo' => 'nullable|image|mimes:png,jpg,jpeg,svg,webp|max:2048',
             'site_avatar' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',

@@ -61,12 +61,14 @@ class GalleryController extends Controller
 
         Photo::whereIn('id', $request->ids)->delete();
 
-        return redirect()->route('admin.gallery.index')->with('success', count($request->ids) . ' photos deleted successfully');
+        return redirect()->route('admin.gallery.index', ['category_id' => $request->category_id])
+            ->with('success', count($request->ids) . ' photos deleted successfully');
     }
 
-    public function destroy(Photo $gallery)
+    public function destroy(Request $request, Photo $gallery)
     {
         $gallery->delete();
-        return redirect()->route('admin.gallery.index')->with('success', 'Photo deleted successfully');
+        return redirect()->route('admin.gallery.index', ['category_id' => $request->category_id])
+            ->with('success', 'Photo deleted successfully');
     }
 }

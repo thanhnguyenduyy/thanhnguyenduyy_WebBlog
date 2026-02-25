@@ -43,11 +43,28 @@
             <span>Categories: {{ count($categories) }}</span>
         </div>
         
-        <div id="selection-status" class="hidden text-brand-blue animate-pulse">
-            <span id="selected-count">0</span> items selected
+        <div id="selection-status" class="hidden items-center space-x-3">
+            <div class="bg-zinc-100 dark:bg-zinc-800 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-brand-border">
+                <span id="selected-count" class="text-brand-blue font-bold">0</span> 
+                <span class="text-[10px] text-zinc-500 uppercase tracking-widest ml-1">items selected</span>
+            </div>
+
+            <div class="flex items-center space-x-2">
+                <form id="mass-delete-form" action="{{ route('admin.gallery.mass-destroy') }}" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn xoá vĩnh viễn những tấm ảnh đã chọn không?')">
+                    @csrf
+                    <input type="hidden" name="category_id" value="{{ request('category_id') }}">
+                    <div id="selected-ids-container"></div>
+                    <button type="submit" class="flex items-center bg-rose-500/10 hover:bg-rose-500 text-rose-500 hover:text-white px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border border-rose-500/20">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                        Delete
+                    </button>
+                </form>
+                <button onclick="deselectAll()" class="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 text-[10px] font-bold uppercase tracking-widest px-2 transition-colors">Cancel</button>
+            </div>
         </div>
     </div>
 
+    @if(count($photos) > 0)
     <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
         @foreach($photos as $photo)
         <div class="group relative aspect-square bg-zinc-200 dark:bg-zinc-800 rounded-lg overflow-hidden border border-zinc-200 dark:border-brand-border hover:border-brand-blue/30 transition-all photography-item">
@@ -65,8 +82,9 @@
                     <form action="{{ route('admin.gallery.destroy', $photo) }}" method="POST" onsubmit="return confirm('Delete this photo?')">
                         @csrf
                         @method('DELETE')
+                        <input type="hidden" name="category_id" value="{{ request('category_id') }}">
                         <button type="submit" class="p-1.5 bg-black/40 backdrop-blur-md rounded-lg text-white hover:text-red-400 border border-white/10 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                         </button>
                     </form>
                 </div>
@@ -80,27 +98,18 @@
         </div>
         @endforeach
     </div>
+    @else
+    <div class="bg-zinc-50 dark:bg-zinc-900/50 border-2 border-dashed border-zinc-200 dark:border-zinc-800 rounded-3xl p-20 text-center">
+        <div class="w-20 h-20 bg-zinc-100 dark:bg-zinc-800 rounded-full flex items-center justify-center mx-auto mb-6 text-zinc-400">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg>
+        </div>
+        <h3 class="text-xl font-serif text-zinc-900 dark:text-white mb-2">Chưa có ảnh nào trong bộ sưu tập này.</h3>
+        <p class="text-zinc-500 text-sm max-w-xs mx-auto">Hãy bắt đầu bằng cách tải lên những tấm ảnh đầu tiên của bạn bằng nút Bulk Upload phía trên.</p>
+    </div>
+    @endif
 </div>
 
-<!-- Floating Mass Action Bar -->
-<div id="mass-action-bar" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-zinc-900 border border-white/10 px-6 py-4 rounded-2xl shadow-2xl flex items-center space-x-6 z-50 transform translate-y-32 transition-transform duration-300">
-    <div class="text-white">
-        <span id="floating-count" class="font-bold text-brand-blue mr-1">0</span>
-        <span class="text-xs uppercase tracking-widest font-bold opacity-70">Captured selected</span>
-    </div>
-    <div class="h-6 w-[1px] bg-white/10"></div>
-    <div class="flex items-center space-x-3">
-        <form id="mass-delete-form" action="{{ route('admin.gallery.mass-destroy') }}" method="POST" onsubmit="return confirm('Bạn có chắc chắn muốn xoá vĩnh viễn những tấm ảnh đã chọn không?')">
-            @csrf
-            <div id="selected-ids-container"></div>
-            <button type="submit" class="flex items-center bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                Delete Selected
-            </button>
-        </form>
-        <button onclick="deselectAll()" class="text-white/50 hover:text-white text-[10px] font-bold uppercase tracking-widest px-2 transition-colors">Cancel</button>
-    </div>
-</div>
+
 
 <!-- Bulk Upload Modal -->
 <div id="upload-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
@@ -158,9 +167,7 @@
     // Selection Logic
     const selectAll = document.getElementById('select-all');
     const photoCheckboxes = document.querySelectorAll('.photo-checkbox');
-    const massActionBar = document.getElementById('mass-action-bar');
     const selectedCount = document.getElementById('selected-count');
-    const floatingCount = document.getElementById('floating-count');
     const selectedIdsContainer = document.getElementById('selected-ids-container');
     const selectionStatus = document.getElementById('selection-status');
 
@@ -168,15 +175,14 @@
         const checkedCount = document.querySelectorAll('.photo-checkbox:checked').length;
         
         if (checkedCount > 0) {
-            massActionBar.classList.remove('translate-y-32');
             selectionStatus.classList.remove('hidden');
+            selectionStatus.classList.add('flex');
         } else {
-            massActionBar.classList.add('translate-y-32');
             selectionStatus.classList.add('hidden');
+            selectionStatus.classList.remove('flex');
         }
 
         selectedCount.textContent = checkedCount;
-        floatingCount.textContent = checkedCount;
 
         // Update hidden inputs for mass delete
         selectedIdsContainer.innerHTML = '';
@@ -218,18 +224,39 @@
         container.innerHTML = '';
         
         if (input.files && input.files.length > 0) {
-                    reader.readAsDataURL(file);
-                }
+            text.textContent = `${input.files.length} Photos Prepared`;
+            
+            const limit = 5;
+            const files = Array.from(input.files);
+            const previewFiles = files.slice(0, limit);
+            const extraCount = files.length - limit;
+            
+            previewFiles.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const div = document.createElement('div');
+                    div.className = 'relative aspect-square rounded-lg overflow-hidden border border-zinc-200 dark:border-zinc-700 bg-black group/preview';
+                    div.innerHTML = `
+                        <img src="${e.target.result}" class="w-full h-full object-cover opacity-80 group-hover/preview:opacity-100 transition-opacity">
+                        <div class="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover/preview:opacity-100 transition-opacity p-2">
+                             <span class="text-white text-[8px] truncate font-mono text-center">${file.name}</span>
+                        </div>
+                    `;
+                    container.appendChild(div);
+                };
+                reader.readAsDataURL(file);
             });
 
-            // Special case: if total <= limit, we don't need the +n card.
-            // But if we have images and other things? (The prompt only cares about images)
+            if (extraCount > 0) {
+                const moreDiv = document.createElement('div');
+                moreDiv.className = 'aspect-square rounded-lg border-2 border-dashed border-zinc-200 dark:border-zinc-800 flex items-center justify-center bg-zinc-50 dark:bg-zinc-900/50';
+                moreDiv.innerHTML = `<span class="text-zinc-500 font-bold text-lg">+${extraCount}</span>`;
+                container.appendChild(moreDiv);
+            }
         } else {
-            text.innerHTML = 'Drag items here or <span class="text-brand-blue font-semibold">Browse</span>';
-            container.classList.add('hidden');
-            defaultUi.classList.remove('hidden');
+            text.textContent = 'Select Captures';
         }
     }
 </script>
+@endpush
 @endsection
-

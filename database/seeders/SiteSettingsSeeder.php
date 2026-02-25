@@ -67,6 +67,12 @@ class SiteSettingsSeeder extends Seeder
                 'type' => 'textarea',
                 'group' => 'Profile'
             ],
+            [
+                'key' => 'tech_stack',
+                'value' => 'TYPESCRIPT,REACT,NODE.JS,GO,AWS,DOCKER,FIGMA,NEXT.JS,POSTGRES',
+                'type' => 'textarea',
+                'group' => 'Profile'
+            ],
 
             // Social
             [

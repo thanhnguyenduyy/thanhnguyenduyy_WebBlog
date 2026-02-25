@@ -42,15 +42,9 @@
                 <div class="stack-card-accent"></div>
                 <h4 class="stack-card-title">STACK ARCHITECTURE</h4>
                 <div class="stack-tags">
-                    <span class="stack-tag">TYPESCRIPT</span>
-                    <span class="stack-tag">REACT</span>
-                    <span class="stack-tag">NODE.JS</span>
-                    <span class="stack-tag">GO</span>
-                    <span class="stack-tag">AWS</span>
-                    <span class="stack-tag">DOCKER</span>
-                    <span class="stack-tag">FIGMA</span>
-                    <span class="stack-tag">NEXT.JS</span>
-                    <span class="stack-tag">POSTGRES</span>
+                    @foreach(explode(',', $settings['tech_stack'] ?? '') as $tag)
+                        <span class="stack-tag">{{ trim($tag) }}</span>
+                    @endforeach
                 </div>
             </div>
         </div>
