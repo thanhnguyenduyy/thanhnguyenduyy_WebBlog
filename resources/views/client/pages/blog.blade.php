@@ -1,6 +1,6 @@
 @extends('client.layouts.app')
 
-@section('title', 'Blog | thanhnguyenduyy')
+@section('title', 'Blog | ' . $settings['site_name'])
 @section('description', 'Thoughts on bits, bytes, and bokeh')
 
 @section('content')
@@ -36,7 +36,7 @@
             return [
                 'id' => $post->id,
                 'title' => $post->title,
-                'date' => $post->date,
+                'date' => $post->published_at ? $post->published_at->format('M d, Y') : '',
                 'excerpt' => $post->excerpt,
                 'category' => $post->category,
                 'image' => $post->image_url,

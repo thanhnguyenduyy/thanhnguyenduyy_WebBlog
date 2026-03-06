@@ -3,24 +3,25 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\BlogPost;
+use App\Models\Project;
+use App\Models\Photo;
+use App\Models\Message;
 
 class DashboardController extends Controller
 {
     public function index()
     {
         $stats = [
-            ['label' => 'Total Visits', 'value' => '42.8k', 'change' => '+12.5%', 'trend' => 'up'],
-            ['label' => 'Avg. Duration', 'value' => '2m 15s', 'change' => '-2.4%', 'trend' => 'down'],
-            ['label' => 'Project Clicks', 'value' => '1,204', 'change' => '+8.2%', 'trend' => 'up'],
+            ['label' => 'Blog Posts', 'value' => BlogPost::count(), 'icon' => 'book'],
+            ['label' => 'Projects', 'value' => Project::count(), 'icon' => 'briefcase'],
+            ['label' => 'Photos', 'value' => Photo::count(), 'icon' => 'camera'],
+            ['label' => 'Unread Messages', 'value' => Message::where('is_read', false)->count(), 'icon' => 'mail'],
         ];
 
-        $chartData = [
-            'labels' => ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            'views' => [4000, 3000, 2000, 2780, 1890, 2390, 3490],
-        ];
+        $recentMessages = Message::latest()->take(3)->get();
 
-        return view('admin.dashboard', compact('stats', 'chartData'))
+        return view('admin.dashboard', compact('stats', 'recentMessages'))
             ->with('title', 'Dashboard')
             ->with('currentViewId', 'dashboard');
     }

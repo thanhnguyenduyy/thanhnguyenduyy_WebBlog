@@ -11,7 +11,7 @@ class ResourcesController extends Controller
 {
     public function index()
     {
-        $resources = ResourceItem::orderBy('created_at', 'desc')->get();
+        $resources = ResourceItem::orderBy('created_at', 'desc')->paginate(15);
 
         return view('admin.resources.index', compact('resources'))
             ->with('title', 'Resources')

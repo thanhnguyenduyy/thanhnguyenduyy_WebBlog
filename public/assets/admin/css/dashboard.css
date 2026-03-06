@@ -1,0 +1,67 @@
+/* Dashboard specific styles */
+.stat-card {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    opacity: 0.06;
+    transform: translate(30%, -30%);
+    transition: all 0.5s;
+}
+
+.stat-card:hover::before {
+    opacity: 0.12;
+    transform: translate(20%, -20%) scale(1.2);
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+}
+
+.stat-card-blue::before {
+    background: #00A3FF;
+}
+
+.stat-card-emerald::before {
+    background: #10B981;
+}
+
+.stat-card-violet::before {
+    background: #8B5CF6;
+}
+
+.stat-card-amber::before {
+    background: #F59E0B;
+}
+
+.stat-icon {
+    transition: transform 0.3s;
+}
+
+.stat-card:hover .stat-icon {
+    transform: scale(1.1);
+}
+
+.message-row {
+    transition: all 0.2s;
+}
+
+.message-row:hover {
+    transform: translateX(4px);
+}
+
+.count-value {
+    background: linear-gradient(135deg, var(--tw-gradient-from), var(--tw-gradient-to));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}

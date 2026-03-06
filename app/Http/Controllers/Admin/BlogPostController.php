@@ -4,13 +4,29 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\BlogPost;
+use App\Constants\AppConstants;
 use Illuminate\Http\Request;
 
 class BlogPostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $posts = BlogPost::orderBy('created_at', 'desc')->get();
+        $query = BlogPost::orderBy('created_at', 'desc');
+
+        if ($request->has('status') && in_array($request->status, [AppConstants::STATUS_PUBLISHED, AppConstants::STATUS_DRAFT])) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                  ->orWhere('excerpt', 'like', "%{$search}%");
+            });
+        }
+
+        $posts = $query->paginate(AppConstants::DEFAULT_PAGINATION);
+        
         return view('admin.blog.index', compact('posts'))
             ->with('title', 'Journal')
             ->with('currentViewId', 'blog');

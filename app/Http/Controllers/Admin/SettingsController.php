@@ -6,9 +6,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\SiteSetting;
+use App\Traits\FileCleanupTrait;
+use App\Services\ImageService;
 
 class SettingsController extends Controller
 {
+    use FileCleanupTrait;
+
+    protected $imageService;
+
+    public function __construct(ImageService $imageService)
+    {
+        $this->imageService = $imageService;
+    }
     public function index()
     {
         $settings = SiteSetting::all()->groupBy('group');
@@ -35,29 +45,39 @@ class SettingsController extends Controller
             'footer_quote' => 'required|string',
             'tech_stack' => 'required|string',
             // File fields validation
-            'site_logo' => 'nullable|image|mimes:png,jpg,jpeg,svg,webp|max:2048',
             'site_avatar' => 'nullable|image|mimes:png,jpg,jpeg,webp|max:2048',
-            'site_favicon' => 'nullable|mimes:ico,png,jpg,jpeg|max:512',
         ];
 
         $request->validate($rules);
 
         // Handle regular text settings
-        $settings = $request->except(['_token', 'site_logo', 'site_avatar', 'site_favicon']);
+        $settings = $request->except(['_token', 'site_avatar']);
         foreach ($settings as $key => $value) {
             SiteSetting::where('key', $key)->update(['value' => $value]);
         }
 
         // Handle file uploads
-        $fileFields = ['site_logo', 'site_avatar', 'site_favicon'];
+        $fileFields = ['site_avatar'];
         foreach ($fileFields as $field) {
             if ($request->hasFile($field)) {
+                // Delete old file
+                $oldSetting = SiteSetting::where('key', $field)->first();
+                if ($oldSetting) {
+                    $this->deleteOldFile($oldSetting->value);
+                }
+
                 $file = $request->file($field);
-                $filename = time() . '_' . $field . '.' . $file->getClientOriginalExtension();
-                $path = $file->storeAs('uploads/settings', $filename, 'public');
+                
+                // Optimize and store using ImageService
+                $path = $this->imageService->optimizeAndStore(
+                    $file, 
+                    'uploads/settings', 
+                    400, // Width for avatar
+                    400  // Height for avatar
+                );
                 
                 SiteSetting::where('key', $field)->update([
-                    'value' => '/storage/' . $path
+                    'value' => $path
                 ]);
             }
         }

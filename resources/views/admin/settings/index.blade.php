@@ -16,9 +16,7 @@
         'social_instagram' => ['Contact', 'Social Links'],
         'social_facebook' => ['Contact', 'Social Links'],
         'footer_quote' => ['Footer'],
-        'site_logo' => ['Navbar'],
         'site_avatar' => ['Home', 'About'],
-        'site_favicon' => ['Browser Tab'],
         'tech_stack' => ['About Stack Architecture'],
     ];
 @endphp
@@ -85,7 +83,7 @@
                         <div class="flex-1 flex flex-col justify-center">
                             @php
                                 $isTallField = in_array($setting->key, ['about_quote', 'technologist_bio', 'observer_bio', 'tech_stack']);
-                                $isRequired = !in_array($setting->key, ['social_github', 'social_instagram', 'social_facebook', 'site_logo', 'site_avatar', 'site_favicon']);
+                                $isRequired = !in_array($setting->key, ['social_github', 'social_instagram', 'social_facebook', 'site_avatar']);
                                 $inputType = $setting->type;
                                 if ($setting->key === 'contact_email') $inputType = 'email';
                             @endphp

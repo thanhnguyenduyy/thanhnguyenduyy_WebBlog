@@ -10,7 +10,7 @@ class InboxController extends Controller
 {
     public function index()
     {
-        $messages = Message::orderBy('created_at', 'desc')->get();
+        $messages = Message::orderBy('created_at', 'desc')->paginate(8);
         return view('admin.inbox.index', compact('messages'))
             ->with('title', 'Inbox')
             ->with('currentViewId', 'contact');

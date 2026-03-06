@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin - {{ $title ?? 'Dashboard' }} | thanhnguyenduyy</title>
+    <title>Admin | {{ $settings['site_name'] }}</title>
+    <link rel="stylesheet" href="{{ asset('assets/admin/css/admin-common.css') }}">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -76,11 +77,11 @@
                     </div>
                     <div class="flex items-center space-x-3 pl-6 border-l border-zinc-200 dark:border-zinc-800">
                         <div class="text-right hidden md:block">
-                            <p class="text-xs font-bold text-zinc-800 dark:text-white">Nguyễn Duy Thanh</p>
-                            <p class="text-[10px] text-zinc-500">Super Admin</p>
+                            <p class="text-xs font-bold text-zinc-800 dark:text-white">{{ $settings['display_name'] ?? 'Trần Minh Nhật' }}</p>
+                            <p class="text-[10px] text-zinc-500">Admin</p>
                         </div>
                         <div class="w-8 h-8 rounded-full bg-zinc-200 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 overflow-hidden ring-2 ring-transparent hover:ring-brand-blue transition-all cursor-pointer">
-                            <img src="https://picsum.photos/100/100" alt="Admin" class="w-full h-full object-cover" />
+                            <img src="{{ (isset($settings['site_avatar']) && str_starts_with($settings['site_avatar'], '/')) ? asset($settings['site_avatar']) : asset('storage/' . ($settings['site_avatar'] ?? '')) }}" alt="Admin" class="w-full h-full object-cover" />
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 @extends('client.layouts.app')
 
-@section('title', 'Now | thanhnguyenduyy')
+@section('title', 'Now | ' . $settings['site_name'])
 @section('description', 'What I am doing now')
 
 @section('content')

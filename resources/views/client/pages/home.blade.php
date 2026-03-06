@@ -1,6 +1,6 @@
 @extends('client.layouts.app')
 
-@section('title', 'Home | thanhnguyenduyy')
+@section('title', 'Home | ' . $settings['site_name'])
 
 @section('content')
 <!-- Home Page -->

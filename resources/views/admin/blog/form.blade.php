@@ -2,23 +2,6 @@
 
 @push('styles')
 <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
-<style>
-    .Editor-panel .CodeMirror {
-        background-color: transparent !important;
-        color: inherit !important;
-        border-color: #3f3f46 !important;
-    }
-    .dark .Editor-panel .editor-toolbar {
-        background-color: #18181b !important;
-        border-color: #27272a !important;
-    }
-    .dark .Editor-panel .editor-toolbar button {
-        color: #d4d4d8 !important;
-    }
-    .dark .Editor-panel .editor-toolbar button.active, .dark .Editor-panel .editor-toolbar button:hover {
-        background-color: #27272a !important;
-    }
-</style>
 @endpush
 
 @section('content')
@@ -45,7 +28,7 @@
                     value="{{ old('title', $post->title ?? '') }}"
                     class="w-full bg-zinc-50 dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg p-3 text-zinc-900 dark:text-white focus:border-brand-blue focus:outline-none transition-colors"
                     placeholder="Enter post title..."
-                    onkeyup="updateSlug(this.value)"
+                    onkeyup="updateSlug(this.value, 'post-slug')"
                     required
                 />
             </div>
@@ -130,7 +113,7 @@
                 <span>Excerpt / Summary</span>
                 <button 
                     type="button"
-                    onclick="generateWithAI()"
+                    onclick="callGenerateAI()"
                     id="ai-gen-btn"
                     class="flex items-center text-brand-blue text-[10px] hover:text-blue-700 dark:hover:text-blue-300 disabled:opacity-50 transition-colors"
                 >
@@ -176,59 +159,17 @@
 
 @push('scripts')
 <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+<script src="{{ asset('assets/admin/js/admin-utils.js') }}"></script>
+<script src="{{ asset('assets/admin/js/blog-form.js') }}"></script>
 <script>
-    // Initialize EasyMDE
-    const easyMDE = new EasyMDE({
-        element: document.getElementById('markdown-editor'),
-        spellChecker: false,
-        autosave: {
-            enabled: true,
-            uniqueId: "journal-entry-{{ $post->id ?? 'new' }}",
-            delay: 1000,
-        },
-        status: ["chars", "lines", "words"],
-        showIcons: ["code", "table"],
+    document.addEventListener('DOMContentLoaded', () => {
+        initBlogForm({
+            autosaveId: "journal-entry-{{ $post->id ?? 'new' }}"
+        });
     });
 
-    function updateSlug(title) {
-        const slug = title.toLowerCase()
-            .replace(/[^\w\s-]/g, '')
-            .replace(/[\s_]+/g, '-')
-            .replace(/^-+|-+$/g, '');
-        document.getElementById('post-slug').value = slug;
-    }
-
-    async function generateWithAI() {
-        const title = document.getElementById('post-title').value;
-        const btn = document.getElementById('ai-gen-btn');
-        const btnText = document.getElementById('ai-btn-text');
-        const excerptField = document.getElementById('post-excerpt');
-
-        if (!title) {
-            alert("Please enter a title first");
-            return;
-        }
-
-        btn.disabled = true;
-        btnText.textContent = 'GENERATING...';
-
-        try {
-            const response = await fetch('{{ route('admin.blog.generate') }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ title })
-            });
-            const data = await response.json();
-            excerptField.value = data.suggestion;
-        } catch (error) {
-            console.error('AI generation failed:', error);
-        } finally {
-            btn.disabled = false;
-            btnText.textContent = 'GENERATE WITH AI';
-        }
+    function callGenerateAI() {
+        generateWithAI('{{ route('admin.blog.generate') }}', '{{ csrf_token() }}');
     }
 </script>
 @endpush

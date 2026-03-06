@@ -13,12 +13,11 @@
         </a>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         @foreach($projects as $project)
-        <div class="group bg-white dark:bg-brand-panel border border-zinc-200 dark:border-brand-border rounded-xl overflow-hidden hover:border-brand-blue/30 transition-all shadow-sm dark:shadow-none">
-            <div class="aspect-video relative overflow-hidden">
-                {{-- Original image colors (Removed grayscale filter) --}}
-                <img src="{{ $project->image_url }}" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:grayscale-0 transition-all duration-700">
+        <div class="group bg-white dark:bg-brand-panel border border-zinc-200 dark:border-brand-border rounded-xl overflow-hidden hover:border-brand-blue/30 transition-all shadow-sm dark:shadow-none flex flex-col h-full">
+            <div class="aspect-video relative overflow-hidden flex-shrink-0">
+                <img src="{{ $project->image_url }}" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700">
                 
                 @if($project->is_featured)
                 <div class="absolute top-3 left-3 z-10">
@@ -43,17 +42,21 @@
                     </div>
                 </div>
             </div>
-            <div class="p-5">
-                <h3 class="text-xl font-serif font-medium text-zinc-900 dark:text-white mb-2">{{ $project->title }}</h3>
+            <div class="p-5 flex-1 flex flex-col">
+                <h3 class="text-lg font-medium text-zinc-900 dark:text-white mb-2 line-clamp-1">{{ $project->title }}</h3>
                 <p class="text-zinc-500 text-sm line-clamp-2 mb-4">{{ $project->description }}</p>
-                <div class="flex flex-wrap gap-2">
+                <div class="flex flex-wrap gap-2 mt-auto">
                     @foreach($project->tech_stack ?? [] as $tech)
-                    <span class="text-[10px] bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-2 py-1 rounded font-medium uppercase tracking-widest">{{ $tech }}</span>
+                    <span class="text-[9px] bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 px-2 py-1 rounded font-medium uppercase tracking-widest">{{ $tech }}</span>
                     @endforeach
                 </div>
             </div>
         </div>
         @endforeach
+    </div>
+
+    <div class="mt-8 flex justify-center pb-8">
+        {{ $projects->links('client.partials.pagination') }}
     </div>
 </div>
 @endsection

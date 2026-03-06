@@ -1,11 +1,11 @@
 <div class="w-64 h-full bg-white dark:bg-brand-panel border-r border-zinc-200 dark:border-brand-border flex flex-col flex-shrink-0 relative z-20 transition-colors duration-300">
     <div class="p-6 flex items-center space-x-3 border-b border-zinc-200 dark:border-brand-border/50">
         <div class="w-8 h-8 bg-brand-blue rounded flex items-center justify-center text-black font-bold font-serif text-lg shadow-[0_0_15px_rgba(0,163,255,0.3)]">
-            T
+            {{ strtoupper(substr($settings['site_name'] ?? 'T', 0, 1)) }}
         </div>
         <div>
-            <h1 class="font-bold text-zinc-900 dark:text-white tracking-wide text-sm font-serif">thanhnguyenduyy</h1>
-            <p class="text-[10px] text-zinc-500 uppercase tracking-widest">Admin Console</p>
+            <h1 class="font-bold text-zinc-900 dark:text-white tracking-wide text-sm font-serif">{{ $settings['site_name'] ?? 'minhnhat_dev' }}</h1>
+            <p class="text-[10px] text-zinc-500 uppercase tracking-widest">Admin</p>
         </div>
     </div>
 

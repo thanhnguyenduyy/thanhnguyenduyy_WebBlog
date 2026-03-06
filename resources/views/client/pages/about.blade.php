@@ -42,7 +42,11 @@
                 <div class="stack-card-accent"></div>
                 <h4 class="stack-card-title">STACK ARCHITECTURE</h4>
                 <div class="stack-tags">
-                    @foreach(explode(',', $settings['tech_stack'] ?? '') as $tag)
+                    @php
+                        $techStack = $settings['tech_stack'] ?? '';
+                        $tags = is_array($techStack) ? $techStack : explode(',', $techStack);
+                    @endphp
+                    @foreach($tags as $tag)
                         <span class="stack-tag">{{ trim($tag) }}</span>
                     @endforeach
                 </div>
@@ -52,7 +56,7 @@
         <!-- 02. THE OBSERVER -->
         <div class="about-section about-section-observer">
             <div class="about-observer-image">
-                <img src="/assets/images/web/workspace.jpg"
+                <img src="https://images.unsplash.com/photo-1493932484895-752d1471eab5?q=80&w=1200"
                     alt="Photography Workspace">
             </div>
             <div class="about-section-content">

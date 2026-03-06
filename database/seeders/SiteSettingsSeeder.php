@@ -13,19 +13,19 @@ class SiteSettingsSeeder extends Seeder
             // General
             [
                 'key' => 'site_name',
-                'value' => 'thanhnguyenduyy',
+                'value' => 'minhnhat_dev',
                 'type' => 'text',
                 'group' => 'General'
             ],
             [
                 'key' => 'site_description',
-                'value' => 'Câu chuyện của Nguyễn Duy Thanh - Developer và Photographer',
+                'value' => 'Nơi giao thoa giữa cấu trúc mã nguồn và nhịp điệu ánh sáng. Blog cá nhân của một Senior Developer đam mê nhiếp ảnh.',
                 'type' => 'textarea',
                 'group' => 'General'
             ],
             [
                 'key' => 'contact_email',
-                'value' => 'thanhnguyenduyy@gmail.com',
+                'value' => 'hello@minhnhat.me',
                 'type' => 'text',
                 'group' => 'General'
             ],
@@ -33,43 +33,43 @@ class SiteSettingsSeeder extends Seeder
             // Profile
             [
                 'key' => 'display_name',
-                'value' => 'Nguyễn Duy Thanh',
-                'type' => 'text',
+                'value' => 'Trần Minh Nhật',
+                'type' => 'textarea',
                 'group' => 'Profile'
             ],
             [
                 'key' => 'primary_slogan',
-                'value' => 'Xây dựng thế giới qua code. Lưu giữ khoảnh khắc qua ống kính.',
-                'type' => 'text',
+                'value' => 'Pixels for Vision. Code for Logic. Moments for Soul.',
+                'type' => 'textarea',
                 'group' => 'Profile'
             ],
             [
                 'key' => 'short_bio',
-                'value' => 'Tôi là một người sáng tạo đa lĩnh vực, hoạt động tại điểm giao thoa giữa công nghệ và nghệ thuật.',
+                'value' => 'Kỹ sư phần mềm ban ngày, người quan sát đô thị ban đêm. Tôi xây dựng những trải nghiệm số mượt mà và lưu giữ những lát cắt tĩnh lặng của Sài Gòn qua ống kính 35mm.',
                 'type' => 'textarea',
                 'group' => 'Profile'
             ],
             [
                 'key' => 'about_quote',
-                'value' => '"Tôi xây dựng nền tảng kỹ thuật số và lưu giữ những khoảnh khắc vụt qua. Một công việc đòi hỏi sự chính xác, công việc kia đòi hỏi sự kiên nhẫn."',
+                'value' => '"Simple is hard. Minimalism is a discipline of selection, not just omission."',
                 'type' => 'textarea',
                 'group' => 'Profile'
             ],
             [
                 'key' => 'technologist_bio',
-                'value' => "Hành trình IT của tôi bắt đầu từ sự tò mò về cách mọi thứ vận hành bên dưới lớp vỏ. Từ dòng code 'Hello World' đầu tiên cho đến việc xây dựng các nền tảng web lưu lượng cao, tôi luôn bị cuốn hút bởi vẻ đẹp của các hệ thống có cấu trúc tốt. Tôi chuyên sâu về phát triển Fullstack, Cơ sở hạ tầng đám mây và thiết kế UI/UX.",
+                'value' => "Trong thế giới công nghệ luôn biến đổi, tôi chọn theo đuổi sự bền vững trong kiến trúc phần mềm. Tập trung vào React Ecosystem và Distributed Systems, tôi luôn tìm kiếm sự cân bằng giữa hiệu suất tối đa và trải nghiệm người dùng tinh tế.",
                 'type' => 'textarea',
                 'group' => 'Profile'
             ],
             [
                 'key' => 'observer_bio',
-                'value' => "Nhiếp ảnh là cách tôi sống chậm lại. Trong một thế giới của những phát hành vội vã, ống kính buộc tôi phải kiên nhẫn đợi chờ ánh sáng. Các tác phẩm của tôi tập trung vào phong cách Street Minimalism (Đường phố Tối giản), tìm kiếm trật tự và sự cân đối đầy chất thơ trong sự hỗn loạn của đô thị.",
+                'value' => "Nhiếp ảnh với tôi không phải là việc bấm máy, mà là việc học cách nhìn. Tôi bị thu hút bởi những đường nét kiến trúc mạnh mẽ và những khoảnh khắc cô độc trong nhịp sống hối hả, nơi ánh sáng kể câu chuyện mà từ ngữ không thể diễn tả.",
                 'type' => 'textarea',
                 'group' => 'Profile'
             ],
             [
                 'key' => 'tech_stack',
-                'value' => 'TYPESCRIPT,REACT,NODE.JS,GO,AWS,DOCKER,FIGMA,NEXT.JS,POSTGRES',
+                'value' => 'REACT,TS,NEXT.JS,GOLANG,KUBERNETES,AWS,CLOUDFLARE,FIGMA,NODE,SQL',
                 'type' => 'textarea',
                 'group' => 'Profile'
             ],
@@ -77,36 +77,24 @@ class SiteSettingsSeeder extends Seeder
             // Social
             [
                 'key' => 'social_github',
-                'value' => 'https://github.com/thanhnguyenduyy',
+                'value' => 'https://github.com/minhnhatdev',
                 'type' => 'text',
                 'group' => 'Social'
             ],
             [
                 'key' => 'social_instagram',
-                'value' => 'https://www.instagram.com/thanhnguyenduyy/',
+                'value' => 'https://www.instagram.com/nhatminh_photos/',
                 'type' => 'text',
                 'group' => 'Social'
             ],
             [
                 'key' => 'social_facebook',
-                'value' => 'https://www.facebook.com/thanhnguyenduyy',
+                'value' => 'https://www.facebook.com/minhnhat.tran',
                 'type' => 'text',
                 'group' => 'Social'
             ],
 
             // Assets
-            [
-                'key' => 'site_logo',
-                'value' => '/client/assets/images/logo.png',
-                'type' => 'file',
-                'group' => 'Assets'
-            ],
-            [
-                'key' => 'site_favicon',
-                'value' => '/favicon.ico',
-                'type' => 'file',
-                'group' => 'Assets'
-            ],
             [
                 'key' => 'site_avatar',
                 'value' => '/assets/images/web/site_avatar.jpg',
@@ -117,7 +105,7 @@ class SiteSettingsSeeder extends Seeder
             // Footer
             [
                 'key' => 'footer_quote',
-                'value' => '"Logic sẽ đưa bạn từ A đến B. Trí tưởng tượng sẽ đưa bạn đi khắp mọi nơi."',
+                'value' => '"Logic will get you from A to B. Imagination will take you everywhere."',
                 'type' => 'textarea',
                 'group' => 'Footer'
             ],

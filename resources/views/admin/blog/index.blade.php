@@ -15,13 +15,25 @@
 
     <!-- Filters -->
     <div class="flex space-x-4 pb-2 border-b border-zinc-200 dark:border-zinc-800">
-        <button class="text-zinc-900 dark:text-white border-b-2 border-brand-blue pb-2 text-sm font-medium">All Posts</button>
-        <button class="text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 pb-2 text-sm transition-colors">Published</button>
-        <button class="text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 pb-2 text-sm transition-colors">Drafts</button>
-        <div class="ml-auto relative">
+        <a href="{{ route('admin.blog.index') }}" 
+           class="{{ !request()->has('status') ? 'text-zinc-900 dark:text-white border-b-2 border-brand-blue' : 'text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors' }} pb-2 text-sm font-medium">
+            All Posts
+        </a>
+        <a href="{{ route('admin.blog.index', ['status' => 'Published']) }}" 
+           class="{{ request()->status === 'Published' ? 'text-zinc-900 dark:text-white border-b-2 border-brand-blue' : 'text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors' }} pb-2 text-sm font-medium">
+            Published
+        </a>
+        <a href="{{ route('admin.blog.index', ['status' => 'Draft']) }}" 
+           class="{{ request()->status === 'Draft' ? 'text-zinc-900 dark:text-white border-b-2 border-brand-blue' : 'text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors' }} pb-2 text-sm font-medium">
+            Drafts
+        </a>
+        <form action="{{ route('admin.blog.index') }}" method="GET" class="ml-auto relative">
+            @if(request('status'))
+                <input type="hidden" name="status" value="{{ request('status') }}">
+            @endif
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input type="text" placeholder="Search..." class="bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800 rounded-full pl-9 pr-4 py-1 text-xs text-zinc-900 dark:text-white focus:outline-none focus:border-zinc-400 dark:focus:border-zinc-600 w-48 transition-colors" />
-        </div>
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Search..." class="bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-800 rounded-full pl-9 pr-4 py-1 text-xs text-zinc-900 dark:text-white focus:outline-none focus:border-zinc-400 dark:focus:border-zinc-600 w-48 transition-colors" />
+        </form>
     </div>
 
     <!-- List -->
@@ -61,6 +73,12 @@
             </div>
             @endforeach
         </div>
+
+        @if($posts->hasPages())
+        <div class="mt-8 flex justify-center pb-8">
+            {{ $posts->links('client.partials.pagination') }}
+        </div>
+        @endif
     </div>
 </div>
 @endsection

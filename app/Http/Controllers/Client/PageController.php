@@ -57,7 +57,7 @@ class PageController extends Controller
      */
     public function projects()
     {
-        $projects = Project::all();
+        $projects = Project::orderBy('is_featured', 'desc')->orderBy('created_at', 'desc')->paginate(8);
         return view('client.pages.projects', compact('projects'));
     }
 
@@ -66,7 +66,7 @@ class PageController extends Controller
      */
     public function resources()
     {
-        $resources = ResourceItem::all();
+        $resources = ResourceItem::orderBy('created_at', 'desc')->paginate(9);
         return view('client.pages.resources', compact('resources'));
     }
 

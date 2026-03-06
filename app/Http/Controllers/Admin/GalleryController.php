@@ -5,10 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Photo;
 use App\Models\GalleryCategory;
+use App\Traits\FileCleanupTrait;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
 
 class GalleryController extends Controller
 {
+    use FileCleanupTrait;
+
+    protected $imageService;
+
+    public function __construct(ImageService $imageService)
+    {
+        $this->imageService = $imageService;
+    }
     public function index(Request $request)
     {
         $query = Photo::with('galleryCategory');
@@ -37,14 +47,14 @@ class GalleryController extends Controller
         $categoryId = $request->input('gallery_category_id');
 
         foreach ($request->file('photos') as $file) {
-            $path = $file->store('gallery', 'public');
+            $path = $this->imageService->optimizeAndStore($file, 'gallery', 1600); // Higher res for gallery
             
             $title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             
             Photo::create([
                 'title' => $title,
                 'gallery_category_id' => $categoryId,
-                'url' => '/storage/' . $path,
+                'url' => $path,
                 'exif' => 'Auto-extracted',
             ]);
         }
@@ -59,6 +69,11 @@ class GalleryController extends Controller
             'ids.*' => 'exists:photos,id'
         ]);
 
+        $photos = Photo::whereIn('id', $request->ids)->get();
+        foreach ($photos as $photo) {
+            $this->deleteOldFile($photo->url);
+        }
+        
         Photo::whereIn('id', $request->ids)->delete();
 
         return redirect()->route('admin.gallery.index', ['category_id' => $request->category_id])
@@ -67,6 +82,8 @@ class GalleryController extends Controller
 
     public function destroy(Request $request, Photo $gallery)
     {
+        $this->deleteOldFile($gallery->url);
+        $gallery->gallery_category_id = $gallery->gallery_category_id; // Just for clarity
         $gallery->delete();
         return redirect()->route('admin.gallery.index', ['category_id' => $request->category_id])
             ->with('success', 'Photo deleted successfully');

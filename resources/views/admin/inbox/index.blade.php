@@ -76,5 +76,11 @@
             </tbody>
         </table>
     </div>
+
+    @if($messages->hasPages())
+    <div class="flex justify-center pt-2">
+        {{ $messages->links('client.partials.pagination') }}
+    </div>
+    @endif
 </div>
 @endsection

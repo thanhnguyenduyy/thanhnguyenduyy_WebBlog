@@ -4,13 +4,26 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Traits\FileCleanupTrait;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
+    use FileCleanupTrait;
+
+    protected $imageService;
+
+    public function __construct(ImageService $imageService)
+    {
+        $this->imageService = $imageService;
+    }
     public function index()
     {
-        $projects = Project::all();
+        $projects = Project::orderBy('is_featured', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->paginate(8);
+            
         return view('admin.projects.index', compact('projects'))
             ->with('title', 'IT Projects')
             ->with('currentViewId', 'projects');
@@ -43,8 +56,8 @@ class ProjectController extends Controller
         }
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('projects', 'public');
-            $validated['image_url'] = '/storage/' . $path;
+            $path = $this->imageService->optimizeAndStore($request->file('image'), 'projects', 1200);
+            $validated['image_url'] = $path;
         }
 
         $validated['is_featured'] = $request->has('is_featured');
@@ -82,9 +95,11 @@ class ProjectController extends Controller
         }
 
         if ($request->hasFile('image')) {
-            // Option: delete old image if it exists in storage
-            $path = $request->file('image')->store('projects', 'public');
-            $validated['image_url'] = '/storage/' . $path;
+            // Delete old image
+            $this->deleteOldFile($project->image_url);
+            
+            $path = $this->imageService->optimizeAndStore($request->file('image'), 'projects', 1200);
+            $validated['image_url'] = $path;
         }
 
         $validated['is_featured'] = $request->has('is_featured');
@@ -97,6 +112,7 @@ class ProjectController extends Controller
 
     public function destroy(Project $project)
     {
+        $this->deleteOldFile($project->image_url);
         $project->delete();
         return redirect()->route('admin.projects.index')->with('success', 'Project deleted successfully');
     }

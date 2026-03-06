@@ -3,17 +3,11 @@
     <div class="navbar-container">
         <a href="{{ route('client.home') }}" class="logo transition-transform hover:scale-105 active:scale-95" id="logo">
             <div class="logo-icon overflow-hidden flex items-center justify-center">
-                @if(!empty($settings['site_logo']) && str_ends_with($settings['site_logo'], '.svg'))
-                    <img src="{{ $settings['site_logo'] }}" class="w-full h-full object-contain" alt="Logo">
-                @elseif(!empty($settings['site_logo']))
-                    <img src="{{ $settings['site_logo'] }}" class="w-full h-full object-cover" alt="Logo">
-                @else
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="4 17 10 11 4 5"></polyline>
-                        <line x1="12" y1="19" x2="20" y2="19"></line>
-                    </svg>
-                @endif
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="4 17 10 11 4 5"></polyline>
+                    <line x1="12" y1="19" x2="20" y2="19"></line>
+                </svg>
             </div>
             <span class="logo-text">{{ $settings['site_name'] }}</span>
         </a>
@@ -26,7 +20,7 @@
             <a href="{{ route('client.gallery') }}" class="nav-item {{ request()->routeIs('client.gallery') ? 'active' : '' }}">Gallery</a>
             <a href="{{ route('client.projects') }}" class="nav-item {{ request()->routeIs('client.projects') ? 'active' : '' }}">Projects</a>
             <a href="{{ route('client.resources') }}" class="nav-item {{ request()->routeIs('client.resources') ? 'active' : '' }}">Resources</a>
-            <a href="{{ route('client.now') }}" class="nav-item {{ request()->routeIs('client.now') ? 'active' : '' }}">Now</a>
+            <a style="display: none;" href="{{ route('client.now') }}" class="nav-item {{ request()->routeIs('client.now') ? 'active' : '' }}">Now</a>
             <a href="{{ route('client.contact') }}" class="nav-item {{ request()->routeIs('client.contact') ? 'active' : '' }}">Contact</a>
             
             <!-- Theme Toggle -->
@@ -73,7 +67,7 @@
         <a href="{{ route('client.gallery') }}" class="mobile-nav-item {{ request()->routeIs('client.gallery') ? 'active' : '' }}">Gallery</a>
         <a href="{{ route('client.projects') }}" class="mobile-nav-item {{ request()->routeIs('client.projects') ? 'active' : '' }}">Projects</a>
         <a href="{{ route('client.resources') }}" class="mobile-nav-item {{ request()->routeIs('client.resources') ? 'active' : '' }}">Resources</a>
-        <a href="{{ route('client.now') }}" class="mobile-nav-item {{ request()->routeIs('client.now') ? 'active' : '' }}">Now</a>
+        <a style="display: none;" href="{{ route('client.now') }}" class="mobile-nav-item {{ request()->routeIs('client.now') ? 'active' : '' }}">Now</a>
         <a href="{{ route('client.contact') }}" class="mobile-nav-item {{ request()->routeIs('client.contact') ? 'active' : '' }}">Contact</a>
         
         <!-- Mobile Theme Toggle -->

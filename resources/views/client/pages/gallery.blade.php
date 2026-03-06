@@ -1,6 +1,6 @@
 @extends('client.layouts.app')
 
-@section('title', 'Gallery | thanhnguyenduyy')
+@section('title', 'Gallery | ' . $settings['site_name'])
 @section('description', 'Photography portfolio - Street, Portrait, Travel, Minimal')
 
 @section('content')
