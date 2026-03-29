@@ -32,7 +32,7 @@
         <div class="flex items-center gap-4">
             <!-- Navigation Tabs -->
             <div class="flex bg-white dark:bg-zinc-900 p-1 rounded-xl border border-zinc-200 dark:border-brand-border shrink-0 shadow-sm">
-                @foreach($settings as $group => $items)
+                @foreach($groupedSettings as $group => $items)
                     <button 
                         type="button"
                         onclick="switchTab('{{ $group }}')"
@@ -61,7 +61,7 @@
     <form id="settings-form" action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="relative">
-            @foreach($settings as $group => $items)
+            @foreach($groupedSettings as $group => $items)
             <div id="tab-{{ $group }}" class="tab-content {{ $loop->first ? '' : 'hidden' }} animate-in fade-in duration-300">
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                     @foreach($items as $setting)

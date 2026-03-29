@@ -39,6 +39,7 @@
                 'date' => $post->published_at ? $post->published_at->format('M d, Y') : '',
                 'excerpt' => $post->excerpt,
                 'category' => $post->category,
+                'slug' => $post->slug,
                 'image' => $post->image_url,
                 'tags' => []
             ];

@@ -43,6 +43,27 @@ class PageController extends Controller
     }
 
     /**
+     * Blog detail page
+     */
+    public function blogDetail($slug)
+    {
+        $post = BlogPost::where('slug', $slug)
+            ->where('status', 'Published')
+            ->firstOrFail();
+            
+        // Increment view count
+        $post->increment('views_count');
+        
+        $relatedPosts = BlogPost::where('category', $post->category)
+            ->where('id', '!=', $post->id)
+            ->where('status', 'Published')
+            ->limit(3)
+            ->get();
+        
+        return view('client.pages.blog-detail', compact('post', 'relatedPosts'));
+    }
+
+    /**
      * Gallery page with photos
      */
     public function gallery()

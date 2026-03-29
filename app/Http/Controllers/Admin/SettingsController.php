@@ -21,8 +21,8 @@ class SettingsController extends Controller
     }
     public function index()
     {
-        $settings = SiteSetting::all()->groupBy('group');
-        return view('admin.settings.index', compact('settings'))
+        $groupedSettings = SiteSetting::all()->groupBy('group');
+        return view('admin.settings.index', compact('groupedSettings'))
             ->with('title', 'Settings')
             ->with('currentViewId', 'settings');
     }

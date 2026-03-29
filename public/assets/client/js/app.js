@@ -122,7 +122,7 @@ function renderBlogPosts() {
         : BLOG_POSTS.filter(post => post.category === blogFilter);
 
     blogGrid.innerHTML = filteredPosts.map(post => `
-        <article class="blog-card">
+        <a href="/blog/${post.slug}" class="blog-card">
             <div class="blog-card-image">
                 <img src="${post.image}" alt="${post.title}">
                 <div class="blog-card-category">${post.category}</div>
@@ -132,7 +132,7 @@ function renderBlogPosts() {
                 <h3 class="blog-card-title">${post.title}</h3>
                 <p class="blog-card-excerpt">${post.excerpt}</p>
             </div>
-        </article>
+        </a>
     `).join('');
 }
 
